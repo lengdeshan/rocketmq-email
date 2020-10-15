@@ -108,6 +108,9 @@ public class EmailServiceImpl implements EmailService {
         if (emailSplit.length != length) {
             throw new Exception("邮箱错误");
         }
+        if (redisService.get(email) != null){
+            throw new Exception("请勿在规定时间内重复发送");
+        }
         // 邮箱的前几位
         String emailPre = emailSplit[0];
         // 邮箱加密
@@ -141,8 +144,8 @@ public class EmailServiceImpl implements EmailService {
             e.printStackTrace();
         }
         // redis 设置过期时间(单位：秒)
-        int timeout = 15;
+        int timeout = 30;
         // 将验证码存储到 redis
-        redisService.set(email, verificationCode, timeout, TimeUnit.MINUTES);
+        redisService.set(email, verificationCode, timeout, TimeUnit.SECONDS);
     }
 }

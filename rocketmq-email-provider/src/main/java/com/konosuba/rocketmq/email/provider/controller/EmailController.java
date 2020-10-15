@@ -1,6 +1,7 @@
 package com.konosuba.rocketmq.email.provider.controller;
 
 import com.konosuba.rocketmq.email.provider.domain.dto.MemberDto;
+import org.apache.rocketmq.common.message.MessageConst;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,8 @@ public class EmailController {
 
     @PostMapping("/eamil")
     public boolean email(@RequestBody MemberDto memberDto){
-        boolean send = messageChannel.send(MessageBuilder.withPayload(memberDto).build());
+
+        boolean send = messageChannel.send(MessageBuilder.withPayload(memberDto).setHeader(MessageConst.PROPERTY_TAGS, "tagStr").build());
         return send;
     }
 }
