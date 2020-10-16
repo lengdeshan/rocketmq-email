@@ -7,7 +7,7 @@ spring:
   cloud:
     stream:
       bindings:
-        output: {destination: email-topic-xtl, tags: tagStr, content-type: application/json}
+        output: {destination: email-topic-xtl, content-type: application/json}
       rocketmq:
         binder:
           name-server: 120.25.207.44:9876
