@@ -11,5 +11,3 @@ spring:
       rocketmq:
         binder:
           name-server: 120.25.207.44:9876
-        bindings:
-          output: {producer.tags: tagStr}

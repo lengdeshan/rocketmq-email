@@ -1,7 +1,6 @@
 package com.konosuba.rocketmq.email.provider.controller;
 
 import com.konosuba.rocketmq.email.provider.domain.dto.MemberDto;
-import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageConst;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
@@ -17,13 +16,16 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/provider")
-public class EmailController {
+public class EmailController{
+
     @Resource(name = "output")
     private MessageChannel messageChannel;
 
-    @PostMapping("/eamil")
+    @PostMapping("/email")
     public boolean email(@RequestBody MemberDto memberDto){
-        boolean send = messageChannel.send(MessageBuilder.withPayload(memberDto).setHeader(MessageConst.PROPERTY_TAGS, "tagStr").build());
+        boolean send = messageChannel.send(MessageBuilder.withPayload(memberDto)
+                .setHeader(MessageConst.PROPERTY_TAGS, "tagStr")
+                .build());
         return send;
     }
 }
